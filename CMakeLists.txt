@@ -39,6 +39,7 @@ add_subdirectory(WTFOnly)
 
 target_link_libraries(GuiAppExample PUBLIC
     WTF
+        JavaScriptCore
 )
 
 set_property(TARGET GuiAppExample PROPERTY CXX_STANDARD 20)

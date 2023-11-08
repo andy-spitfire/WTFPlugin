@@ -5,6 +5,8 @@
 #include <wtf/RAMSize.h>
 #include <wtf/URL.h>
 
+#include <JavaScriptCore/JavaScriptCore.h>
+
 //==============================================================================
 MainComponent::MainComponent()
 {
@@ -13,12 +15,16 @@ MainComponent::MainComponent()
     DBG(WTF::numberOfPhysicalProcessorCores());
     DBG(WTF::ramSize());
 
-    const auto b = std::string("https://www.youtube.com/watch?v=fLWlE28chls");
-    const auto u = WTF::URL(WTF::String (b.data(), b.size()));
+    auto g = JSContextGroupCreate();
+    auto c = JSGlobalContextCreateInGroup(g, nullptr);
 
-    DBG((u.protocolIsInFTPFamily()? "1" : "0"));
-    DBG((u.protocolIsInHTTPFamily()? "1" : "0"));
-    DBG((const char*) u.path().rawCharacters());
+    auto script = JSStringCreateWithUTF8CString("3 + 3");
+    auto result = JSEvaluateScript(c, script, nullptr, nullptr, 0, nullptr);
+
+    auto resstring = JSValueToStringCopy(c, result, nullptr);
+    char output[40];
+    JSStringGetUTF8CString(resstring, output, 40);
+    DBG(juce::String(output));
 
     setSize (600, 400);
 }
@@ -31,7 +37,10 @@ void MainComponent::paint (juce::Graphics& g)
 
     g.setFont (juce::Font (16.0f));
     g.setColour (juce::Colours::white);
-    g.drawText ("Hello World!", getLocalBounds(), juce::Justification::centred, true);
+    const auto b = std::string("https://www.youtube.com/watch?v=fLWlE28chls");
+    const auto u = WTF::URL(WTF::String (b.data(), b.size()));
+
+    g.drawText ((const char*) u.path().rawCharacters(), getLocalBounds(), juce::Justification::centred, true);
 }
 
 void MainComponent::resized()
