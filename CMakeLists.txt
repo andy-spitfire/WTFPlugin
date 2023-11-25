@@ -4,6 +4,7 @@ project(GUI_APP_EXAMPLE VERSION 0.0.1)
 add_subdirectory(JUCE)                    # If you've put JUCE in a subdirectory called JUCE
 
 set(CMAKE_OSX_ARCHITECTURES x86_64)
+#set(CMAKE_OSX_ARCHITECTURES arm64)
 
 juce_add_gui_app(GuiAppExample
     # VERSION ...                       # Set this if the app version is different to the project version
@@ -35,11 +36,14 @@ target_link_libraries(GuiAppExample
         juce::juce_recommended_lto_flags
         juce::juce_recommended_warning_flags)
 
+include(WTFOnly/cmake/sa_build.cmake)
+
 add_subdirectory(WTFOnly)
 
 target_link_libraries(GuiAppExample PUBLIC
     WTF
-        JavaScriptCore
+    JavaScriptCore
+    WebCore
 )
 
 set_property(TARGET GuiAppExample PROPERTY CXX_STANDARD 20)
