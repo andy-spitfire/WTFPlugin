@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.15)
 project(GUI_APP_EXAMPLE VERSION 0.0.1)
 add_subdirectory(JUCE)                    # If you've put JUCE in a subdirectory called JUCE
 
-set(CMAKE_OSX_ARCHITECTURES x86_64)
+#set(CMAKE_OSX_ARCHITECTURES x86_64)
 #set(CMAKE_OSX_ARCHITECTURES arm64)
 
 juce_add_gui_app(GuiAppExample

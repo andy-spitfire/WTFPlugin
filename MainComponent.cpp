@@ -38,7 +38,7 @@ MainComponent::MainComponent()
 
     // WebCore::Settings s (nullptr);
     // WebCore::Document d = WebCore::Document::create(s, {});
-    WebCore::ProcessWarming::initializeNames();
+    WebCore::ProcessWarming::prewarmGlobally();
 
     WebCore::CSSParserContext ctx (WebCore::CSSParserMode::HTMLStandardMode, {});
     WebCore::CSSParser p (ctx);
